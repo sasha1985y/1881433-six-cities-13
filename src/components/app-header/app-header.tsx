@@ -5,14 +5,14 @@ import AppLogo from '../app-logo/app-logo';
 
 type AppHeaderProps = {
   offers: OfferType[];
-  isAuthorization?: boolean;
+  isAuthorization: boolean;
 }
 
 function AppHeader({
   offers,
   isAuthorization
 }: AppHeaderProps): JSX.Element {
-  const favorites = offers.filter((offer: { isFavorite: boolean }) => offer.isFavorite);
+  const favorites = offers.filter(({isFavorite}) => isFavorite);
   return (
     <header className="header">
       <div className="container">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 function AppCommentForm(): JSX.Element {
-  const [initial, setSymbol] = useState('');
+  const [comment, setComment] = useState('');
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -42,8 +42,8 @@ function AppCommentForm(): JSX.Element {
         </label>
       </div>
       <textarea className="reviews__textarea form__textarea"
-        value={initial}
-        onChange={(evt) => setSymbol(evt.target.value)}
+        value={comment}
+        onChange={(evt) => setComment(evt.target.value)}
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"

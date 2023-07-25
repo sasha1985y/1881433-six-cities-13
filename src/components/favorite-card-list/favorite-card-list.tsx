@@ -6,112 +6,39 @@ type FavoriteCardListProps = {
   offers: OfferType[];
 }
 
-function FavoriteCardList({ offers }: FavoriteCardListProps): JSX.Element {
-  const favorites = offers.filter((offer: { isFavorite: boolean}) => offer.isFavorite);
+const cities = [
+  { name: Places.Paris, id: 1 },
+  { name: Places.Cologne, id: 2 },
+  { name: Places.Brussels, id: 3 },
+  { name: Places.Amsterdam, id: 4 },
+  { name: Places.Hamburg, id: 5 },
+  { name: Places.Dusseldorf, id: 6 }
+];
+
+
+function FavoriteCardList({ offers }: FavoriteCardListProps) {
+  const favorites = offers.filter(({ isFavorite }) => isFavorite);
   return (
-    <ul className="favorites__list">
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Paris.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Paris}</span>
-              </a>
+    <ul className="favorites__locations-list tabs__list">
+      {cities.map((city) => {
+        const cityFavorites = favorites.filter((favorite) => favorite.city.name.toLowerCase() === city.name.toLowerCase());
+        return cityFavorites.length ? (
+          <li key={city.id} className="favorites__locations-items">
+            <div className="favorites__locations locations locations--current">
+              <div className="locations__item">
+                <a className="locations__item-link" href="#">
+                  <span>{city.name}</span>
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Paris.toLowerCase())
-              .map((favorite) => (
+            <div className="favorites__places">
+              {cityFavorites.map((favorite) => (
                 <FavoriteCard content={favorite} key={favorite.id} />
               ))}
-          </div>
-        </li> :
-        null}
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Amsterdam.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Amsterdam}</span>
-              </a>
             </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Amsterdam.toLowerCase())
-              .map((favorite) => (
-                <FavoriteCard content={favorite} key={favorite.id} />
-              ))}
-          </div>
-        </li> :
-        null}
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Brussels.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Brussels}</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Brussels.toLowerCase())
-              .map((favorite) => (
-                <FavoriteCard content={favorite} key={favorite.id} />
-              ))}
-          </div>
-        </li> :
-        null}
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Cologne.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Cologne}</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Cologne.toLowerCase())
-              .map((favorite) => (
-                <FavoriteCard content={favorite} key={favorite.id} />
-              ))}
-          </div>
-        </li> :
-        null}
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Dusseldorf.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Dusseldorf}</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Dusseldorf.toLowerCase())
-              .map((favorite) => (
-                <FavoriteCard content={favorite} key={favorite.id} />
-              ))}
-          </div>
-        </li> :
-        null}
-      {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Hamburg.toLowerCase()).length ?
-        <li className="favorites__locations-items">
-          <div className="favorites__locations locations locations--current">
-            <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>{Places.Hamburg}</span>
-              </a>
-            </div>
-          </div>
-          <div className="favorites__places">
-            {favorites.filter((favorite) => favorite.city.name.toLowerCase() === Places.Hamburg.toLowerCase())
-              .map((favorite) => (
-                <FavoriteCard content={favorite} key={favorite.id} />
-              ))}
-          </div>
-        </li> :
-        null}
+          </li>
+        ) : null;
+      })}
     </ul>
   );
 }
