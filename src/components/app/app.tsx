@@ -1,21 +1,20 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
-import PrivateRoute from '../private-route/private-route';
-import {HelmetProvider} from 'react-helmet-async';
+import AppPrivateRoute from '../app-private-route/app-private-route';
+import { OfferType } from '../../types/offer-type';
 
 type AppScreenProps = {
-  favoritesCount: number;
-  placesFound: number;
+  offers: OfferType[];
 }
 
 function App({
-  favoritesCount,
-  placesFound
+  offers,
 }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
@@ -24,11 +23,13 @@ function App({
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+              <AppPrivateRoute
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen />
-              </PrivateRoute>
+                <FavoritesScreen
+                  offers = {offers}
+                />
+              </AppPrivateRoute>
             }
           />
           <Route
@@ -41,14 +42,13 @@ function App({
           />
           <Route
             path={AppRoute.Offer}
-            element={<OfferScreen />}
+            element={<OfferScreen offers={offers} />}
           />
           <Route
             path={AppRoute.Main}
             element={
               <MainScreen
-                favoritesCount={favoritesCount}
-                placesFound={placesFound}
+                offers = {offers}
               />
             }
           />

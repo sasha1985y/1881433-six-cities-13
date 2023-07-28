@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import AppLogo from '../../components/app-logo/app-logo';
 
 function LoginScreen(): JSX.Element {
   return (
@@ -10,9 +11,7 @@ function LoginScreen(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
+              <AppLogo />
             </div>
           </div>
         </div>

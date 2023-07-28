@@ -1,8 +1,3 @@
-export const Setting = {
-  FavoritesCount: 4,
-  PlacesFound: 311
-};
-
 export enum AppRoute {
   Favorites = '/favorites',
   Login = '/login',
@@ -15,4 +10,13 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+}
+
+export enum Places {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
 }
