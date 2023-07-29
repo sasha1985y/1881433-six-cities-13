@@ -1,16 +1,22 @@
 import { Helmet } from 'react-helmet-async';
 import CardList from '../../components/card-list/card-list';
-import { OfferType } from '../../types/offer-type';
+import { OfferType, City } from '../../types/offer-type';
 import AppHeader from '../../components/app-header/app-header';
 import { AppRoute } from '../../const';
 import AppNavItem from '../../components/app-nav-item/app-nav-item';
+import Map from '../../components/map/map';
+import { Points } from '../../types/map';
 
 type MainScreenProps = {
   offers: OfferType[];
+  points: Points;
+  city: City;
 }
 
 function MainScreen({
-  offers
+  offers,
+  points,
+  city
 }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
@@ -70,7 +76,9 @@ function MainScreen({
                 <CardList offers={offers} />
               </section>
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map points={points} city={city} selectedPoint={undefined} />
+                </section>
               </div>
             </div>
           </div>}
