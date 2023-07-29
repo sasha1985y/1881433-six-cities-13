@@ -7,14 +7,19 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import AppPrivateRoute from '../app-private-route/app-private-route';
-import { OfferType } from '../../types/offer-type';
+import { OfferType, City } from '../../types/offer-type';
+import { Points } from '../../types/map';
 
 type AppScreenProps = {
   offers: OfferType[];
+  points: Points;
+  city: City;
 }
 
 function App({
   offers,
+  points,
+  city
 }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
@@ -49,6 +54,8 @@ function App({
             element={
               <MainScreen
                 offers = {offers}
+                points = {points}
+                city = {city}
               />
             }
           />
