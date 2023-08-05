@@ -2,16 +2,18 @@ import { Helmet } from 'react-helmet-async';
 import CardList from '../../components/card-list/card-list';
 import { OfferType, City } from '../../types/offer-type';
 import AppHeader from '../../components/app-header/app-header';
-import { AppRoute } from '../../const';
+import { AppRoute, MapClassOptions, MapType } from '../../const';
 import AppNavItem from '../../components/app-nav-item/app-nav-item';
 import Map from '../../components/map/map';
 import { Points } from '../../types/map';
+import { CardType } from '../../const';
 
 type MainScreenProps = {
   offers: OfferType[];
   points: Points;
   city: City;
 }
+
 
 function MainScreen({
   offers,
@@ -73,11 +75,20 @@ function MainScreen({
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <CardList offers={offers} />
+                <CardList
+                  offers={offers}
+                  citiesOrNear={CardType.Cities}
+                  classOrEmpty={CardType.TabsContent}
+                />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map points={points} city={city} selectedPoint={undefined} />
+                  <Map
+                    points={points}
+                    city={city}
+                    selectedPoint={undefined}
+                    mapClass={ MapClassOptions[ MapType.Main ] }
+                  />
                 </section>
               </div>
             </div>

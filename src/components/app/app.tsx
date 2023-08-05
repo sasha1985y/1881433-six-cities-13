@@ -7,19 +7,23 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import AppPrivateRoute from '../app-private-route/app-private-route';
-import { OfferType, City } from '../../types/offer-type';
+import { OfferType, City, Review, AllOffer } from '../../types/offer-type';
 import { Points } from '../../types/map';
 
 type AppScreenProps = {
   offers: OfferType[];
   points: Points;
   city: City;
+  reviews: Review[];
+  allOffers: AllOffer[];
 }
 
 function App({
   offers,
   points,
-  city
+  city,
+  reviews,
+  allOffers
 }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
@@ -32,7 +36,7 @@ function App({
                 authorizationStatus={AuthorizationStatus.Auth}
               >
                 <FavoritesScreen
-                  offers = {offers}
+                  offers={offers}
                 />
               </AppPrivateRoute>
             }
@@ -46,16 +50,24 @@ function App({
             element={<NotFoundScreen />}
           />
           <Route
-            path={AppRoute.Offer}
-            element={<OfferScreen offers={offers} />}
+            path={`${AppRoute.Offer}/:offerId`}
+            element={
+              <OfferScreen
+                offers={offers}
+                allOffers={allOffers}
+                points={points}
+                city={city}
+                reviews={reviews}
+              />
+            }
           />
           <Route
             path={AppRoute.Main}
             element={
               <MainScreen
-                offers = {offers}
-                points = {points}
-                city = {city}
+                offers={offers}
+                points={points}
+                city={city}
               />
             }
           />
