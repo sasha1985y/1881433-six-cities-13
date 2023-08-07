@@ -1,0 +1,17 @@
+.capitalize {
+  text-transform: capitalize;
+}
+
+.map-main {
+  height: 100%;
+}
+
+.map-offer {
+  height: 579px;
+  width: 1144px;
+  margin: 0 auto;
+}
+
+.map-clear {
+  background-image: none;
+}

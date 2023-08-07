@@ -46,4 +46,6 @@ export type Comment = {
   rating: number;
 }
 
+export type AllOffer = OfferType & OfferDescription
+
 
