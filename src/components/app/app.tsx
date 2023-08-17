@@ -35,9 +35,7 @@ function App({
               <AppPrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesScreen
-                  offers={offers}
-                />
+                <FavoritesScreen />
               </AppPrivateRoute>
             }
           />
@@ -64,11 +62,7 @@ function App({
           <Route
             path={AppRoute.Main}
             element={
-              <MainScreen
-                offers={offers}
-                points={points}
-                city={city}
-              />
+              <MainScreen />
             }
           />
         </Routes>

@@ -104,8 +104,19 @@ enum CardType {
   Empty = ''
 }
 
+const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+];
+
 export const COEF = 15;
 export const OFFER_COEF = 30;
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
 
 export {
   SchematicClassOptions,
@@ -113,6 +124,9 @@ export {
   OfferСatalogueType,
   MapType,
   MapClassOptions,
-  CardType
+  CardType,
+  MIN_COMMENT_LENGTH,
+  MAX_COMMENT_LENGTH,
+  CITIES
 };
 

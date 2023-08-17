@@ -4,10 +4,13 @@ import { AppRoute, COEF } from '../../const';
 
 type FavoriteItemProps = {
   content: OfferType;
+  onMouseOver: (offerId: string) => void;
+  active: boolean;
 }
 
-function FavoriteCard({ content }: FavoriteItemProps): JSX.Element {
+function FavoriteCard({ content, onMouseOver, active }: FavoriteItemProps): JSX.Element {
   const {
+    id,
     title,
     type,
     price,
@@ -16,14 +19,16 @@ function FavoriteCard({ content }: FavoriteItemProps): JSX.Element {
     previewImage
   } = content;
   return (
-    <article className="favorites__card place-card">
+    <article className={active ? 'favorites__card place-card--active' : 'favorites__card place-card'}
+      onMouseOver={() => onMouseOver(id)}
+    >
       {isPremium ?
         <div className="place-card__mark">
           <span>Premium</span>
         </div> :
         null}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to={AppRoute.Offer}>
+        <Link to={`${AppRoute.Offer}/${id}`}>
           <img className="place-card__image" src= {previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
@@ -47,7 +52,7 @@ function FavoriteCard({ content }: FavoriteItemProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to ={AppRoute.Offer}>{title}</Link>
+          <Link to={ `${ AppRoute.Offer }/${ id }` }>{ title }</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

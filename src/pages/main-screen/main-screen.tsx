@@ -1,49 +1,42 @@
 import { Helmet } from 'react-helmet-async';
 import CardList from '../../components/card-list/card-list';
-import { OfferType, City } from '../../types/offer-type';
 import AppHeader from '../../components/app-header/app-header';
-import { AppRoute, MapClassOptions, MapType } from '../../const';
-import AppNavItem from '../../components/app-nav-item/app-nav-item';
+import { MapClassOptions, MapType, CITIES } from '../../const';
 import Map from '../../components/map/map';
-import { Points } from '../../types/map';
 import { CardType } from '../../const';
-
-type MainScreenProps = {
-  offers: OfferType[];
-  points: Points;
-  city: City;
-}
+import CitiesList from '../../components/cities-list/cities-list';
+import { useAppSelector } from '../../hooks';
 
 
-function MainScreen({
-  offers,
-  points,
-  city
-}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
+  const pickedCityName = useAppSelector(({ city }) => city);
+  const pickedCityOffers = useAppSelector(({ offerList }) => offerList);
+  const offersMarkers
+    = pickedCityOffers.map(({ title, location }) => ({
+      title,
+      lat: location.latitude,
+      lng: location.longitude
+    }));
+
+  const pickedCityOffersCount = pickedCityOffers.length;
+  const [ offer ] = pickedCityOffers;
+  const pickedCity = offer?.city;
   return (
     <div className="page page--gray page--main">
       <Helmet>
         <title>Главная</title>
       </Helmet>
       <AppHeader
-        offers={offers}
         isAuthorization
       />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <AppNavItem title='Paris' path={AppRoute.NotFound} isActive />
-              <AppNavItem title='Cologne' path={AppRoute.NotFound} />
-              <AppNavItem title='Brussels' path={AppRoute.NotFound} />
-              <AppNavItem title='Amsterdam' path={AppRoute.NotFound} />
-              <AppNavItem title='Hamburg' path={AppRoute.NotFound} />
-              <AppNavItem title='Dusseldorf' path={AppRoute.NotFound} />
-            </ul>
+            <CitiesList cities={ CITIES } />
           </section>
         </div>
-        {offers.length === 0 ?
+        {pickedCityOffers.length === 0 ?
           <div className="cities">
             <div className="cities__places-container cities__places-container--empty container">
               <section className="cities__no-places">
@@ -59,7 +52,7 @@ function MainScreen({
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">888 places to stay in Amsterdam</b>
+                <b className="places__found">{ pickedCityOffersCount ? pickedCityOffersCount : 'No' } places to stay in { pickedCityName }</b>
                 <form className="places__sorting" action="#" method="get">
                   <span className="places__sorting-caption">Sort by</span>
                   <span className="places__sorting-type" tabIndex={0}>
@@ -75,17 +68,18 @@ function MainScreen({
                     <li className="places__option" tabIndex={0}>Top rated first</li>
                   </ul>
                 </form>
-                <CardList
-                  offers={offers}
-                  citiesOrNear={CardType.Cities}
-                  classOrEmpty={CardType.TabsContent}
-                />
+                { !!pickedCityOffersCount &&
+              <CardList
+                offers={ pickedCityOffers }
+                citiesOrNear={CardType.Cities}
+                classOrEmpty={CardType.TabsContent}
+              /> }
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    points={points}
-                    city={city}
+                    points = { offersMarkers }
+                    city={ pickedCity }
                     selectedPoint={undefined}
                     mapClass={ MapClassOptions[ MapType.Main ] }
                   />
