@@ -1,18 +1,16 @@
-import { OfferType } from '../../types/offer-type';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import AppLogo from '../app-logo/app-logo';
+import { useAppSelector } from '../../hooks';
 
 type AppHeaderProps = {
-  offers: OfferType[];
   isAuthorization?: boolean;
 }
 
 function AppHeader({
-  offers,
   isAuthorization
 }: AppHeaderProps): JSX.Element {
-  const favorites = offers.filter((offer: { isFavorite: boolean }) => offer.isFavorite);
+  const favorites = useAppSelector(({ offerList }) => offerList).filter((offer: { isFavorite: boolean }) => offer.isFavorite);
   return (
     <header className="header">
       <div className="container">

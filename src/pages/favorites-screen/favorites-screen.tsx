@@ -1,15 +1,11 @@
 import { Helmet } from 'react-helmet-async';
-import { OfferType } from '../../types/offer-type';
 import AppHeader from '../../components/app-header/app-header';
 import FavoriteCardList from '../../components/favorite-card-list/favorite-card-list';
+import { useAppSelector } from '../../hooks';
 
-type FavoritesScreenProps = {
-  offers: OfferType[];
-}
-
-function FavoritesScreen({
-  offers
-}: FavoritesScreenProps): JSX.Element {
+function FavoritesScreen(): JSX.Element {
+  const offers = useAppSelector(({ offerList }) => offerList);
+  const favoriteOffers = useAppSelector(({ offerList }) => offerList).filter((offer: { isFavorite: boolean}) => offer.isFavorite);
   return (
     <div className="page">
       <Helmet>
@@ -19,7 +15,7 @@ function FavoritesScreen({
         offers = {offers}
         isAuthorization
       />
-      {offers.length === 0 ?
+      {favoriteOffers.length === 0 ?
         <main className="page__main page__main--favorites page__main--favorites-empty">
           <div className="page__favorites-container container">
             <section className="favorites favorites--empty">
@@ -35,7 +31,7 @@ function FavoritesScreen({
           <div className="page__favorites-container container">
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <FavoriteCardList offers = {offers}/>
+              <FavoriteCardList />
             </section>
           </div>
         </main>}
