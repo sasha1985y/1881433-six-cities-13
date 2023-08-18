@@ -12,36 +12,32 @@ function FavoriteCardList(): JSX.Element {
   return (
     <ul className="favorites__list">
       {Object.values(Places).map((city) =>
-        favorites.filter(
-          (favorite) =>
-            favorite.city.name.toLowerCase() === city.toLowerCase()
-        ).length ? (
-            <li className="favorites__locations-items" key={city}>
-              <div className="favorites__locations locations locations--current">
-                <div className="locations__item">
-                  <a className="locations__item-link" href="#">
-                    <span>{city}</span>
-                  </a>
-                </div>
+        favorites.some((favorite) => favorite.city.name.toLowerCase() === city.toLowerCase()) &&
+          <li className="favorites__locations-items" key={city}>
+            <div className="favorites__locations locations locations--current">
+              <div className="locations__item">
+                <a className="locations__item-link" href="#">
+                  <span>{city}</span>
+                </a>
               </div>
-              <div className="favorites__places">
-                {favorites
-                  .filter(
-                    (favorite) =>
-                      favorite.city.name.toLowerCase() === city.toLowerCase()
-                  )
-                  .map((favorite) => (
-                    <FavoriteCard
-                      content={favorite}
-                      key={favorite.id}
-                      onMouseOver={() => handleCardHover(favorite.id)}
-                      active={activeCard === favorite.id}
-                    />
-                  ))}
-              </div>
-            </li>
-          ) : null
-      )}
+            </div>
+            <div className="favorites__places">
+              {favorites
+                .filter(
+                  (favorite) =>
+                    favorite.city.name.toLowerCase() === city.toLowerCase()
+                )
+                .map((favorite) => (
+                  <FavoriteCard
+                    content={favorite}
+                    key={favorite.id}
+                    onMouseOver={() => handleCardHover(favorite.id)}
+                    active={activeCard === favorite.id}
+                  />
+                ))}
+            </div>
+          </li>
+      ) }
     </ul>
   );
 }
